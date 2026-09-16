@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 100" width="160" height="100">
+  <!-- Akatsuki Cloud with white/silver outline and deep crimson fill -->
+  <path d="M 45 75 
+           C 25 75, 10 60, 15 40 
+           C 18 25, 35 15, 52 22 
+           C 65 10, 88 8, 105 20 
+           C 118 12, 140 18, 145 35 
+           C 155 45, 152 65, 138 74 
+           C 125 76, 115 72, 110 68 
+           C 100 78, 80 82, 65 76 
+           Z" 
+        fill="#990012" 
+        stroke="#f2f2f2" 
+        stroke-width="3" 
+        stroke-linejoin="round" />
+  <!-- Inner swirl line detail -->
+  <path d="M 40 55 C 35 45, 45 38, 55 42 C 62 45, 60 55, 50 56" 
+        fill="none" 
+        stroke="#ffffff" 
+        stroke-width="2.5" 
+        stroke-linecap="round" />
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <radialGradient id="irisGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff1e42" />
+      <stop offset="70%" stop-color="#c4001d" />
+      <stop offset="100%" stop-color="#67000e" />
+    </radialGradient>
+    <filter id="sharinganGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Outer Ring -->
+  <circle cx="50" cy="50" r="48" fill="#0c0c0e" stroke="#ff1744" stroke-width="1.5" />
+
+  <!-- Iris -->
+  <circle cx="50" cy="50" r="44" fill="url(#irisGrad)" filter="url(#sharinganGlow)" />
+  <circle cx="50" cy="50" r="44" fill="none" stroke="#1a0206" stroke-width="2" />
+
+  <!-- Thin inner guide ring -->
+  <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(20, 0, 5, 0.45)" stroke-width="1" />
+
+  <!-- Itachi's 3 Curved Mangekyo Blades -->
+  <g fill="#0a0a0c" stroke="#000000" stroke-width="0.5">
+    <!-- Center pupil circle -->
+    <circle cx="50" cy="50" r="8" />
+
+    <!-- Blade 1 (Top) -->
+    <path d="M 50 42 
+             C 47 30, 36 15, 50 6
+             C 56 16, 60 28, 54 43 
+             Z" />
+    <!-- Blade 2 (Bottom Right ~120 deg) -->
+    <path d="M 50 42 
+             C 47 30, 36 15, 50 6
+             C 56 16, 60 28, 54 43 
+             Z" transform="rotate(120, 50, 50)" />
+    <!-- Blade 3 (Bottom Left ~240 deg) -->
+    <path d="M 50 42 
+             C 47 30, 36 15, 50 6
+             C 56 16, 60 28, 54 43 
+             Z" transform="rotate(240, 50, 50)" />
+  </g>
+
+  <!-- Center pupil eye dot highlight -->
+  <circle cx="50" cy="50" r="4.5" fill="#000000" />
+  <circle cx="48.5" cy="48.5" r="1.5" fill="rgba(255, 255, 255, 0.65)" />
+</svg>
