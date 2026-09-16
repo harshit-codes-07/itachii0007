@@ -237,6 +237,101 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // 6. Global Keyboard Secret Easter Egg
+  let typedKeys = '';
+  const SECRET_CODES = {
+    itachi: '✦ GENJUTSU ACTIVATED: ITACHI UCHIHA ✦',
+    tsukuyomi: '🌑 TSUKUYOMI INVOKED: 72 HOURS OF GENJUTSU 🌑',
+    mangekyo: '👁️ MANGEKYO SHARINGAN: OMNIPOTENT VISION 👁️',
+    amaterasu: '🔥 AMATERASU: INEXTINGUISHABLE BLACK FLAMES 🔥'
+  };
+
+  window.addEventListener('keydown', (e) => {
+    // Ignore typing inside input, textarea, or contenteditable
+    if (['INPUT', 'TEXTAREA'].includes(e.target.tagName) || e.target.isContentEditable) {
+      return;
+    }
+
+    if (e.key.length === 1 && e.key.match(/[a-z]/i)) {
+      typedKeys = (typedKeys + e.key.toLowerCase()).slice(-15);
+
+      for (const [code, label] of Object.entries(SECRET_CODES)) {
+        if (typedKeys.endsWith(code)) {
+          triggerSecretGenjutsu(code, label);
+          typedKeys = '';
+          break;
+        }
+      }
+    }
+  });
+
+  function triggerSecretGenjutsu(code, title) {
+    // 1. Burst of 35 crows from screen center
+    if (typeof window.triggerCrowBurst === 'function') {
+      window.triggerCrowBurst(window.innerWidth / 2, window.innerHeight / 2, 35);
+    }
+
+    // 2. Play audio jutsu chime
+    if (typeof window.playJutsuChime === 'function') {
+      window.playJutsuChime();
+    }
+
+    // 3. Shockwave ripple
+    if (typeof window.updateWallpaperSettings === 'function') {
+      window.updateWallpaperSettings('shockwave');
+    }
+
+    // 4. Dramatic Screen Flash & Inversion
+    document.body.classList.add('genjutsu-active');
+    setTimeout(() => {
+      document.body.classList.remove('genjutsu-active');
+    }, 2200);
+
+    // 5. Cinematic Genjutsu Banner Toast
+    showGenjutsuBanner(title, code);
+
+    // 6. Echo in terminal if present
+    if (termBody) {
+      appendTermLine(`>> [SECRET UNLOCKED]: ${title}`, 'accent');
+      termBody.scrollTop = termBody.scrollHeight;
+    }
+  }
+
+  function showGenjutsuBanner(title, code) {
+    let banner = document.getElementById('genjutsu-banner');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'genjutsu-banner';
+      banner.className = 'genjutsu-banner';
+      document.body.appendChild(banner);
+    }
+
+    banner.innerHTML = `
+      <div class="genjutsu-inner">
+        <img src="assets/mangekyo.svg" class="genjutsu-eye-spin" alt="Mangekyo" />
+        <div class="genjutsu-title">${title}</div>
+        <p class="genjutsu-sub">“Those who forgive themselves, and are able to accept their true nature... They are the strong ones!”</p>
+      </div>
+    `;
+
+    banner.classList.add('visible');
+    setTimeout(() => {
+      banner.classList.remove('visible');
+    }, 3500);
+  }
+
+  // Amaterasu Toggle button in Wallpaper Bar
+  const amaterasuBtn = document.getElementById('toggle-amaterasu-btn');
+  if (amaterasuBtn) {
+    amaterasuBtn.addEventListener('click', () => {
+      const current = window.WallpaperState?.amaterasuEnabled ?? true;
+      const next = !current;
+      window.updateWallpaperSettings('amaterasu', next);
+      amaterasuBtn.classList.toggle('active', next);
+      amaterasuBtn.textContent = next ? '🔥 Amaterasu: ON' : '🔥 Amaterasu: OFF';
+    });
+  }
+
   function appendTermLine(text, className) {
     const div = document.createElement('div');
     div.className = `term-line ${className || ''}`;

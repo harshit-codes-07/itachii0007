@@ -32,11 +32,71 @@
     initMoonPosition();
   });
 
-  // Mouse interaction
+  // Mouse interaction & Amaterasu Black Flame Trail
+  window.WallpaperState.amaterasuEnabled = true;
+  const amaterasuFlames = [];
+
+  class AmaterasuFlame {
+    constructor(x, y) {
+      this.x = x + (Math.random() - 0.5) * 10;
+      this.y = y + (Math.random() - 0.5) * 10;
+      this.size = Math.random() * 8 + 6;
+      this.speedX = (Math.random() - 0.5) * 1.8;
+      this.speedY = -(Math.random() * 2.2 + 0.8); // Rise like smoke/fire
+      this.alpha = 0.85;
+      this.decay = Math.random() * 0.025 + 0.02;
+      this.rotation = Math.random() * Math.PI * 2;
+      this.rotSpeed = (Math.random() - 0.5) * 0.08;
+    }
+
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.rotation += this.rotSpeed;
+      this.alpha -= this.decay;
+      this.size *= 0.96;
+    }
+
+    draw() {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation);
+      ctx.globalAlpha = Math.max(0, this.alpha);
+
+      // Crimson burning halo
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = 'rgba(255, 30, 66, 0.8)';
+
+      // Outer Pitch-Black Amaterasu body
+      ctx.fillStyle = '#050508';
+      ctx.beginPath();
+      ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Inner Crimson Core spark
+      ctx.fillStyle = this.alpha > 0.4 ? '#ff1e42' : '#8c0018';
+      ctx.beginPath();
+      ctx.arc(0, -this.size * 0.25, this.size * 0.35, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+  }
+
+  function spawnAmaterasu(x, y, count = 2) {
+    if (!window.WallpaperState.amaterasuEnabled) return;
+    for (let i = 0; i < count; i++) {
+      if (amaterasuFlames.length < 90) {
+        amaterasuFlames.push(new AmaterasuFlame(x, y));
+      }
+    }
+  }
+
   window.addEventListener('mousemove', (e) => {
     window.WallpaperState.mouse.x = e.clientX;
     window.WallpaperState.mouse.y = e.clientY;
     window.WallpaperState.mouse.active = true;
+    spawnAmaterasu(e.clientX, e.clientY, 2);
   });
 
   window.addEventListener('mouseleave', () => {
@@ -46,11 +106,88 @@
   // Touch interaction
   window.addEventListener('touchmove', (e) => {
     if (e.touches.length > 0) {
-      window.WallpaperState.mouse.x = e.touches[0].clientX;
-      window.WallpaperState.mouse.y = e.touches[0].clientY;
+      const tx = e.touches[0].clientX;
+      const ty = e.touches[0].clientY;
+      window.WallpaperState.mouse.x = tx;
+      window.WallpaperState.mouse.y = ty;
       window.WallpaperState.mouse.active = true;
+      spawnAmaterasu(tx, ty, 3);
     }
   }, { passive: true });
+
+  // Burst Crow System for Genjutsu Easter Egg
+  const burstCrows = [];
+
+  class BurstCrow {
+    constructor(x, y, angle) {
+      this.x = x;
+      this.y = y;
+      this.angle = angle;
+      this.speed = Math.random() * 6 + 6;
+      this.scale = Math.random() * 0.6 + 0.5;
+      this.wingState = Math.random() * Math.PI * 2;
+      this.wingSpeed = 0.28;
+      this.alpha = 1;
+    }
+
+    update() {
+      this.x += Math.cos(this.angle) * this.speed;
+      this.y += Math.sin(this.angle) * this.speed;
+      this.wingState += this.wingSpeed;
+      if (this.x < -150 || this.x > width + 150 || this.y < -150 || this.y > height + 150) {
+        this.alpha = 0;
+      }
+    }
+
+    draw() {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.angle);
+      ctx.scale(this.scale, this.scale);
+      ctx.globalAlpha = this.alpha;
+
+      const flap = Math.sin(this.wingState);
+      const wingH = flap * 18;
+
+      ctx.fillStyle = '#050508';
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = '#ff1e42';
+
+      // Crow Body
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 12, 5, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Wings
+      ctx.beginPath();
+      ctx.moveTo(-2, -1);
+      ctx.quadraticCurveTo(-10, -wingH - 8, -22, -wingH * 1.3);
+      ctx.quadraticCurveTo(-12, -wingH * 0.6 + 2, 2, 0);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(2, -1);
+      ctx.quadraticCurveTo(8, -wingH - 6, 20, -wingH * 1.2);
+      ctx.quadraticCurveTo(10, -wingH * 0.5 + 2, -2, 0);
+      ctx.fill();
+
+      // Red eye
+      ctx.fillStyle = '#ff1744';
+      ctx.beginPath();
+      ctx.arc(8, -2, 1, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+  }
+
+  function triggerCrowBurst(ox = width / 2, oy = height / 2, count = 28) {
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 / count) * i + (Math.random() - 0.5) * 0.4;
+      burstCrows.push(new BurstCrow(ox, oy, angle));
+    }
+  }
+  window.triggerCrowBurst = triggerCrowBurst;
 
   // Shockwave ripples on click
   const shockwaves = [];
@@ -386,7 +523,29 @@
       embers[i].draw();
     }
 
-    // 4. Ground mist & Shockwaves
+    // 4. Draw Burst Crows (Easter Egg)
+    for (let i = burstCrows.length - 1; i >= 0; i--) {
+      const bc = burstCrows[i];
+      bc.update();
+      if (bc.alpha <= 0.05) {
+        burstCrows.splice(i, 1);
+      } else {
+        bc.draw();
+      }
+    }
+
+    // 5. Draw Amaterasu Black Flames (Cursor Trail)
+    for (let i = amaterasuFlames.length - 1; i >= 0; i--) {
+      const af = amaterasuFlames[i];
+      af.update();
+      if (af.alpha <= 0.05 || af.size <= 0.8) {
+        amaterasuFlames.splice(i, 1);
+      } else {
+        af.draw();
+      }
+    }
+
+    // 6. Ground mist & Shockwaves
     drawAtmosphere();
     drawShockwaves();
 
@@ -404,6 +563,8 @@
       initEmbers();
     } else if (setting === 'shockwave') {
       triggerShockwave(width / 2, height / 2);
+    } else if (setting === 'amaterasu') {
+      window.WallpaperState.amaterasuEnabled = value;
     }
   };
 

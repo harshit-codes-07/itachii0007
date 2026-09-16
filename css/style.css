@@ -1212,3 +1212,71 @@ body {
     display: none;
   }
 }
+
+/* ==========================================================================
+   GENJUTSU EASTER EGG & BANNER
+   ========================================================================== */
+body.genjutsu-active {
+  animation: genjutsuInvert 2.2s ease forwards;
+}
+
+@keyframes genjutsuInvert {
+  0% { filter: invert(0) contrast(1); }
+  15% { filter: invert(1) hue-rotate(180deg) contrast(1.6); }
+  35% { filter: invert(0.8) hue-rotate(190deg) contrast(1.4); }
+  60% { filter: invert(0.4) hue-rotate(180deg) contrast(1.2); }
+  100% { filter: invert(0) contrast(1); }
+}
+
+.genjutsu-banner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: rgba(7, 7, 10, 0.92);
+  border: 2px solid var(--crimson);
+  border-radius: var(--radius-lg);
+  padding: 2.2rem 3rem;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(255, 30, 66, 0.7), inset 0 0 30px rgba(255, 30, 66, 0.2);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-width: 90vw;
+}
+
+.genjutsu-banner.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.genjutsu-eye-spin {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 1.2rem;
+  display: block;
+  animation: rotateMangekyo 1.5s linear infinite;
+  filter: drop-shadow(0 0 15px var(--crimson));
+}
+
+.genjutsu-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 0 15px var(--crimson);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.6rem;
+}
+
+.genjutsu-sub {
+  font-style: italic;
+  color: #ff99aa;
+  font-size: 0.95rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
