@@ -3,62 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Harshit Shukla | Itachi Shinobi Portfolio (itachii0007)</title>
-  <meta name="description" content="Personal developer portfolio of Harshit Shukla (harshit-codes-07) themed around Itachi Uchiha with interactive live wallpaper, Python automation, and web development.">
-  <meta name="keywords" content="Harshit Shukla, harshit-codes-07, itachii0007, Itachi Uchiha, Python developer, Web developer, Shinobi portfolio">
-  <meta property="og:title" content="Harshit Shukla | Itachi Developer Portfolio">
-  <meta property="og:description" content="Building logic, writing code, and seeking growth. Dark aesthetics and clean architecture.">
+  <title>Harshit Shukla | Software Developer & Problem Solver</title>
+  <meta name="description" content="Portfolio of Harshit Shukla (harshit-codes-07) — Software Developer specializing in Python backend logic, workflow automation, and modern responsive web development.">
+  <meta name="keywords" content="Harshit Shukla, harshit-codes-07, Software Developer, Python Developer, Web Developer, Automation Engineer, Portfolio">
+  <meta property="og:title" content="Harshit Shukla | Software Developer Portfolio">
+  <meta property="og:description" content="Building robust logic, scalable systems, and clean web interfaces.">
   <meta property="og:type" content="website">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="assets/mangekyo.svg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%2308090d'/><rect x='20' y='20' width='60' height='60' rx='14' fill='%23f43f5e'/><text x='50' y='62' font-family='sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>HS</text></svg>">
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Background Live Wallpaper Canvas -->
+  <!-- Ambient Aurora Glow Canvas Background -->
   <canvas id="live-wallpaper-canvas"></canvas>
   <div class="vignette-overlay"></div>
-
-  <!-- Floating Wallpaper Quick Controls -->
-  <div class="wallpaper-bar" title="Interactive Live Wallpaper Controls">
-    <span class="wp-label">Live Wallpaper</span>
-    <button class="wp-control-btn active" id="toggle-amaterasu-btn" title="Toggle Amaterasu Black Flame Cursor">🔥 Amaterasu: ON</button>
-    <button class="wp-control-btn active" id="toggle-crows-btn" title="Toggle flying crows">🦅 Crows: ON</button>
-    <button class="wp-control-btn" id="toggle-embers-btn" title="Cycle ember particle density">✨ Embers: NORMAL</button>
-    <button class="wp-control-btn" id="trigger-shockwave-btn" title="Trigger Tsukuyomi Shockwave">👁️ Tsukuyomi</button>
-  </div>
 
   <div class="content-wrapper">
 
     <!-- Header Navigation -->
     <header class="site-nav">
       <div class="container nav-inner">
-        <a href="#hero" class="brand-logo">
-          <img src="assets/mangekyo.svg" alt="Mangekyo Sharingan" class="mangekyo-icon">
-          <div class="brand-text">HARSHIT<span>.ITACHI</span></div>
+        <a href="#hero" class="brand-logo" aria-label="Harshit Shukla Homepage">
+          <div class="brand-monogram">HS</div>
+          <div class="brand-text">HARSHIT<span>.DEV</span></div>
         </a>
 
         <ul class="nav-links">
           <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#skills" class="nav-link">Jutsu (Skills)</a></li>
-          <li><a href="#projects" class="nav-link">Scrolls (Projects)</a></li>
+          <li><a href="#skills" class="nav-link">Tech Stack</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
           <li><a href="#terminal" class="nav-link">Console</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
 
         <div class="nav-actions">
-          <button class="nav-btn" id="audio-toggle-btn" title="Toggle dark ambient audio synthesizer">
-            <span>🎵</span>
-            <span id="audio-status-text">Audio</span>
-          </button>
-          <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="nav-btn" title="Visit GitHub Profile">
+          <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="nav-cta-btn" title="View GitHub Profile">
             <span>⚡</span>
             <span>GitHub</span>
           </a>
-          <button class="mobile-toggle" aria-label="Toggle mobile menu">☰</button>
+          <a href="#contact" class="nav-cta-btn" title="Get in touch">
+            <span>✉️</span>
+            <span>Get in Touch</span>
+          </a>
+          <button class="mobile-toggle" aria-label="Toggle navigation menu">☰</button>
         </div>
       </div>
     </header>
@@ -70,45 +61,62 @@
       <section id="hero" class="hero-section">
         <div class="container hero-grid">
           <div class="hero-content">
-            <div class="hero-tag">
-              <span class="pulse-dot"></span>
-              <span>Shinobi Developer · Harshit Shukla</span>
+            <div class="status-badge">
+              <span class="status-pulse-dot"></span>
+              <span>Available for Projects & Opportunities</span>
             </div>
 
             <h1 class="hero-title">
-              <span class="name-highlight">Building Logic & Code,</span>
-              <span class="domain-gradient">Seeking Growth.</span>
+              <span class="name-highlight">Building Robust Logic,</span>
+              <span class="gradient-text">Scalable Code & Modern Web.</span>
             </h1>
 
-            <div class="hero-quote-box">
-              <p class="quote-text">“It is not wise to judge others based on your own preconceptions and by their appearances.”</p>
-              <div class="quote-author">— Itachi Uchiha 🦅</div>
-            </div>
+            <p class="hero-subtitle">
+              Hi, I'm <strong>Harshit Shukla</strong>. A software developer focused on Python backend architecture, workflow automation, and clean responsive web interfaces. Driven by discipline and analytical problem solving.
+            </p>
 
             <div class="hero-actions">
-              <a href="#skills" class="btn-primary">
-                <span>Explore Jutsu</span>
-                <span>⚔️</span>
-              </a>
-              <a href="#projects" class="btn-secondary">
-                <span>View Scrolls</span>
-                <span>📜</span>
+              <a href="#projects" class="btn-primary">
+                <span>View Projects</span>
+                <span>🚀</span>
               </a>
               <a href="#contact" class="btn-secondary">
-                <span>Summon Raven</span>
+                <span>Contact Me</span>
                 <span>✉️</span>
+              </a>
+              <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                <span>GitHub Profile</span>
+                <span>↗</span>
               </a>
             </div>
           </div>
 
-          <!-- Hero Visual: Rotating Mangekyo Avatar Frame -->
+          <!-- Hero Visual: Developer Card Preview -->
           <div class="hero-visual">
-            <div class="eye-orb-wrapper">
-              <div class="eye-glow-ring"></div>
-              <div class="eye-pulse-circle"></div>
-              <div class="hero-avatar-frame">
-                <img id="hero-avatar-target" src="assets/mangekyo.svg" alt="Harshit Shukla - Itachi Shinobi" class="hero-avatar-img">
-                <img src="assets/akatsuki.svg" alt="Akatsuki Cloud" class="avatar-badge-akatsuki">
+            <div class="profile-card-preview">
+              <div class="preview-avatar-wrapper">
+                <img id="hero-avatar-target" src="https://avatars.githubusercontent.com/u/172370711?v=4" alt="Harshit Shukla" class="preview-avatar-img">
+                <div class="preview-avatar-badge" title="Active"></div>
+              </div>
+
+              <div class="preview-info">
+                <h3 class="preview-name">Harshit Shukla</h3>
+                <p class="preview-role">Software Developer</p>
+              </div>
+
+              <div class="preview-stats-row">
+                <div class="preview-stat-item">
+                  <div class="preview-stat-num" id="hero-repo-count">3+</div>
+                  <div class="preview-stat-lbl">Repositories</div>
+                </div>
+                <div class="preview-stat-item">
+                  <div class="preview-stat-num">100%</div>
+                  <div class="preview-stat-lbl">Dedication</div>
+                </div>
+                <div class="preview-stat-item">
+                  <div class="preview-stat-num">Active</div>
+                  <div class="preview-stat-lbl">Status</div>
+                </div>
               </div>
             </div>
           </div>
@@ -119,30 +127,30 @@
       <section id="about" class="section">
         <div class="container">
           <div class="section-header">
-            <span class="section-subtitle">Shinobi Identity</span>
-            <h2 class="section-title">The Path of Logic & Growth</h2>
+            <span class="section-subtitle">Background & Philosophy</span>
+            <h2 class="section-title">Engineering Discipline & Continuous Growth</h2>
           </div>
 
           <div class="about-grid">
             <div class="about-card">
               <p class="about-text">
-                Dedicated to writing resilient logic, mastering modern web architecture, and constantly expanding problem-solving horizons. Guided by the discipline of a shinobi—silent focus, precise execution, and relentless self-improvement.
+                I am a developer driven by logic, continuous improvement, and deep problem solving. Whether architecting automated scripts in Python or building clean modern web frontends, my focus remains steadfast: write maintainable, scalable, and self-documenting code that delivers tangible value.
               </p>
 
               <div class="pillar-list">
                 <div class="pillar-item">
-                  <span class="pillar-icon">🔭</span>
+                  <span class="pillar-icon">⚙️</span>
                   <div class="pillar-content">
-                    <h4>Core Logic</h4>
-                    <p>Building resilient logic in Python and automating repetitive everyday workflows.</p>
+                    <h4>Core Logic & Scripting</h4>
+                    <p>Building resilient Python solutions and automating everyday repetitive pipelines.</p>
                   </div>
                 </div>
 
                 <div class="pillar-item">
-                  <span class="pillar-icon">🧪</span>
+                  <span class="pillar-icon">🌐</span>
                   <div class="pillar-content">
-                    <h4>Frontend Alchemy</h4>
-                    <p>Crafting immersive HTML, CSS, and modern JavaScript interfaces.</p>
+                    <h4>Frontend Engineering</h4>
+                    <p>Crafting accessible, high-performance HTML5, CSS3, and modern JavaScript interfaces.</p>
                   </div>
                 </div>
 
@@ -150,15 +158,15 @@
                   <span class="pillar-icon">🥋</span>
                   <div class="pillar-content">
                     <h4>Discipline & Focus</h4>
-                    <p>Home calisthenics, deep problem-solving routines, and physical endurance.</p>
+                    <p>Calisthenics athlete applying structured physical stamina to analytical debugging.</p>
                   </div>
                 </div>
 
                 <div class="pillar-item">
-                  <span class="pillar-icon">⚡</span>
+                  <span class="pillar-icon">📐</span>
                   <div class="pillar-content">
-                    <h4>Dark Vibe</h4>
-                    <p>Dark aesthetics, Itachi philosophy, and clean modular code architecture.</p>
+                    <h4>Clean Architecture</h4>
+                    <p>Prioritizing modular design, clean separation of concerns, and readable code.</p>
                   </div>
                 </div>
               </div>
@@ -168,7 +176,7 @@
             <div class="github-card">
               <div>
                 <div class="gh-user-header">
-                  <img id="gh-avatar-img" src="assets/mangekyo.svg" alt="GitHub Profile" class="gh-avatar">
+                  <img id="gh-avatar-img" src="https://avatars.githubusercontent.com/u/172370711?v=4" alt="GitHub Profile" class="gh-avatar">
                   <div class="gh-user-info">
                     <h3 id="gh-name">Harshit Shukla</h3>
                     <div class="gh-handle">@harshit-codes-07</div>
@@ -189,14 +197,14 @@
                     <span class="gh-stat-lbl">Followers</span>
                   </div>
                   <div class="gh-stat-box">
-                    <span class="gh-stat-num">100%</span>
-                    <span class="gh-stat-lbl">Chakra</span>
+                    <span class="gh-stat-num">Active</span>
+                    <span class="gh-stat-lbl">Streak</span>
                   </div>
                 </div>
               </div>
 
               <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="gh-visit-btn">
-                <span>View Profile on GitHub</span>
+                <span>View GitHub Profile</span>
                 <span>↗</span>
               </a>
             </div>
@@ -204,12 +212,12 @@
         </div>
       </section>
 
-      <!-- Shinobi Arsenal (Skills) -->
+      <!-- Technical Stack & Skills -->
       <section id="skills" class="section">
         <div class="container">
           <div class="section-header">
-            <span class="section-subtitle">Shinobi Arsenal</span>
-            <h2 class="section-title">Mastered Jutsu & Technologies</h2>
+            <span class="section-subtitle">Technical Stack</span>
+            <h2 class="section-title">Core Skills & Competencies</h2>
           </div>
 
           <div class="skills-grid">
@@ -217,11 +225,11 @@
               <div class="skill-header">
                 <div class="skill-icon-wrap">🐍</div>
                 <div>
-                  <h3 class="skill-name">Python</h3>
+                  <h3 class="skill-name">Python 3</h3>
                   <span class="skill-category">Core Logic & Scripting</span>
                 </div>
               </div>
-              <p class="skill-desc">Backend algorithms, task automation, CLI scripts, and clean functional programming.</p>
+              <p class="skill-desc">Backend logic, task automation, CLI tooling, algorithmic problem solving, and scripting.</p>
               <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 88%;"></div></div>
             </div>
 
@@ -233,7 +241,7 @@
                   <span class="skill-category">HTML5 · CSS3 · Modern JS</span>
                 </div>
               </div>
-              <p class="skill-desc">Responsive layouts, glassmorphism, DOM manipulation, and interactive canvas graphics.</p>
+              <p class="skill-desc">Modern responsive design, glassmorphic styling, DOM manipulation, and interactive Canvas 2D.</p>
               <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 82%;"></div></div>
             </div>
 
@@ -242,10 +250,10 @@
                 <div class="skill-icon-wrap">🌿</div>
                 <div>
                   <h3 class="skill-name">Git & GitHub</h3>
-                  <span class="skill-category">Version Control & Pages</span>
+                  <span class="skill-category">Version Control & CI/CD</span>
                 </div>
               </div>
-              <p class="skill-desc">Branching models, atomic commits, repository architecture, and GitHub Pages deployments.</p>
+              <p class="skill-desc">Atomic commits, branch workflows, GitHub Actions automation, and GitHub Pages hosting.</p>
               <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 85%;"></div></div>
             </div>
 
@@ -254,50 +262,50 @@
                 <div class="skill-icon-wrap">🧩</div>
                 <div>
                   <h3 class="skill-name">Problem Solving</h3>
-                  <span class="skill-category">Logic & Optimization</span>
+                  <span class="skill-category">Algorithms & Logic</span>
                 </div>
               </div>
-              <p class="skill-desc">Analytical problem decomposition, pattern recognition, and bug resolution.</p>
-              <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 80%;"></div></div>
+              <p class="skill-desc">Structured problem decomposition, data structures, pattern recognition, and optimization.</p>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 84%;"></div></div>
             </div>
 
             <div class="skill-card">
               <div class="skill-header">
-                <div class="skill-icon-wrap">🥋</div>
+                <div class="skill-icon-wrap">⚡</div>
                 <div>
-                  <h3 class="skill-name">Discipline & Calisthenics</h3>
-                  <span class="skill-category">Mental Focus & Stamina</span>
+                  <h3 class="skill-name">Workflow Automation</h3>
+                  <span class="skill-category">Productivity Engineering</span>
                 </div>
               </div>
-              <p class="skill-desc">Consistent training regimen providing high cognitive endurance and resilience under pressure.</p>
-              <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 95%;"></div></div>
+              <p class="skill-desc">Automated batch processing, scheduled jobs, repetitive task reduction, and CLI helpers.</p>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 86%;"></div></div>
             </div>
 
             <div class="skill-card">
               <div class="skill-header">
-                <div class="skill-icon-wrap">⚙️</div>
+                <div class="skill-icon-wrap">🏗️</div>
                 <div>
                   <h3 class="skill-name">Clean Architecture</h3>
-                  <span class="skill-category">Design & Maintainability</span>
+                  <span class="skill-category">Code Quality & Design</span>
                 </div>
               </div>
-              <p class="skill-desc">Modular structures, separation of concerns, and readable, self-documenting code.</p>
-              <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 84%;"></div></div>
+              <p class="skill-desc">Modular structuring, separation of concerns, readable documentation, and maintainability.</p>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 85%;"></div></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Scrolls of Power (Projects) -->
+      <!-- Featured Projects -->
       <section id="projects" class="section">
         <div class="container">
           <div class="section-header">
-            <span class="section-subtitle">Scrolls of Power</span>
-            <h2 class="section-title">Featured Creations</h2>
+            <span class="section-subtitle">Portfolio</span>
+            <h2 class="section-title">Featured Projects</h2>
           </div>
 
           <div class="project-filters">
-            <button class="filter-btn active" data-filter="all">All Scrolls</button>
+            <button class="filter-btn active" data-filter="all">All Projects</button>
             <button class="filter-btn" data-filter="python">Python</button>
             <button class="filter-btn" data-filter="web">Web & UI</button>
             <button class="filter-btn" data-filter="automation">Automation</button>
@@ -307,19 +315,19 @@
             <!-- Project 1 -->
             <div class="project-card" data-category="web">
               <div class="project-banner">
-                <span class="project-banner-icon">👁️</span>
+                <span class="project-banner-icon">💻</span>
               </div>
               <div class="project-content">
-                <h3 class="project-title">Itachi Live Developer Portfolio</h3>
-                <p class="project-desc">Interactive portfolio website featuring 60FPS live canvas wallpaper with Tsukuyomi moon, procedural crow flight, and Web Audio API ambient synthesizer.</p>
+                <h3 class="project-title">Interactive Developer Portfolio</h3>
+                <p class="project-desc">A modern, responsive portfolio engineered with pure HTML5, modern CSS3 glassmorphism, 60FPS ambient aurora canvas lighting, and live GitHub API integration.</p>
                 <div class="project-tags">
                   <span class="project-tag">HTML5</span>
                   <span class="project-tag">CSS3</span>
                   <span class="project-tag">Canvas 2D</span>
-                  <span class="project-tag">Web Audio</span>
+                  <span class="project-tag">GitHub API</span>
                 </div>
                 <div class="project-links">
-                  <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="project-link-btn link-code">Code</a>
+                  <a href="https://github.com/harshit-codes-07/itachii0007" target="_blank" rel="noopener noreferrer" class="project-link-btn link-code">Source Code</a>
                   <a href="#hero" class="project-link-btn link-demo">Live Demo</a>
                 </div>
               </div>
@@ -328,19 +336,19 @@
             <!-- Project 2 -->
             <div class="project-card" data-category="python">
               <div class="project-banner">
-                <span class="project-banner-icon">🐍</span>
+                <span class="project-banner-icon">⚙️</span>
               </div>
               <div class="project-content">
-                <h3 class="project-title">Tsukuyomi Automation Suite</h3>
-                <p class="project-desc">A Python-based workflow automation toolkit that streamlines routine file manipulation, data organization, and terminal tasks with zero manual friction.</p>
+                <h3 class="project-title">Workflow Automation Suite</h3>
+                <p class="project-desc">Python-driven automation toolkit for streamlining routine file management, batch data processing, and command-line system operations with zero manual friction.</p>
                 <div class="project-tags">
                   <span class="project-tag">Python 3</span>
                   <span class="project-tag">CLI</span>
                   <span class="project-tag">Automation</span>
                 </div>
                 <div class="project-links">
-                  <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="project-link-btn link-code">Code</a>
-                  <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="project-link-btn link-demo">Repository</a>
+                  <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="project-link-btn link-code">Repository</a>
+                  <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="project-link-btn link-demo">View Details</a>
                 </div>
               </div>
             </div>
@@ -348,19 +356,19 @@
             <!-- Project 3 -->
             <div class="project-card" data-category="automation">
               <div class="project-banner">
-                <span class="project-banner-icon">🦅</span>
+                <span class="project-banner-icon">📊</span>
               </div>
               <div class="project-content">
-                <h3 class="project-title">Raven Dispatch Protocol</h3>
-                <p class="project-desc">Lightweight message dispatcher and event logger designed with decoupled modules, clean exception handling, and persistent disk logging.</p>
+                <h3 class="project-title">Habit & Performance Protocol</h3>
+                <p class="project-desc">Structured productivity and discipline tracking engine. Logs workout milestones, daily coding sessions, and problem-solving metrics with persistent disk storage.</p>
                 <div class="project-tags">
                   <span class="project-tag">Python</span>
-                  <span class="project-tag">Systems</span>
+                  <span class="project-tag">Data Storage</span>
                   <span class="project-tag">Clean Arch</span>
                 </div>
                 <div class="project-links">
-                  <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="project-link-btn link-code">Code</a>
-                  <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="project-link-btn link-demo">Repository</a>
+                  <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="project-link-btn link-code">Repository</a>
+                  <a href="https://github.com/harshit-codes-07" target="_blank" rel="noopener noreferrer" class="project-link-btn link-demo">View Details</a>
                 </div>
               </div>
             </div>
@@ -368,12 +376,12 @@
         </div>
       </section>
 
-      <!-- Jutsu Console (Terminal) -->
+      <!-- Developer Terminal Console -->
       <section id="terminal" class="terminal-section">
         <div class="container">
           <div class="section-header">
-            <span class="section-subtitle">Shinobi Console</span>
-            <h2 class="section-title">Interactive Jutsu Terminal</h2>
+            <span class="section-subtitle">CLI Environment</span>
+            <h2 class="section-title">Interactive Developer Terminal</h2>
           </div>
 
           <div class="terminal-box">
@@ -383,32 +391,33 @@
                 <span class="dot yellow"></span>
                 <span class="dot green"></span>
               </div>
-              <span class="terminal-title">itachi@shinobi-terminal: ~/itachii0007</span>
+              <span class="terminal-title">harshit@dev-box: ~/portfolio</span>
               <span>bash</span>
             </div>
 
             <div class="terminal-body" id="term-output-body">
-              <div class="term-line system">Type <span class="term-line accent">help</span> to reveal available shinobi commands.</div>
-              <div class="term-line system">Try: <span class="term-line accent">skills</span>, <span class="term-line accent">projects</span>, <span class="term-line accent">mangekyo</span>, <span class="term-line accent">tsukuyomi</span>, or <span class="term-line accent">itachi</span></div>
+              <div class="term-line system">Welcome to Harshit Shukla's interactive developer terminal.</div>
+              <div class="term-line system">Type <span class="term-line accent">help</span> to view available commands.</div>
+              <div class="term-line system">Try: <span class="term-line accent">about</span>, <span class="term-line accent">skills</span>, <span class="term-line accent">projects</span>, or <span class="term-line accent">contact</span></div>
             </div>
 
             <div class="terminal-footer" style="padding: 0 1.5rem 1.2rem;">
               <div class="term-input-row">
-                <span class="term-prompt">itachi@shinobi:~$</span>
-                <input type="text" id="term-cmd-input" class="term-input" placeholder="Type a command (e.g., help, mangekyo) and hit Enter..." autocomplete="off" spellcheck="false">
+                <span class="term-prompt">harshit@dev-box:~$</span>
+                <input type="text" id="term-cmd-input" class="term-input" placeholder="Type a command (e.g. help, projects, skills) and hit Enter..." autocomplete="off" spellcheck="false">
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Contact / Summon Raven -->
+      <!-- Contact Section -->
       <section id="contact" class="section">
         <div class="container">
           <div class="contact-card">
-            <h2 class="contact-title">Summon the Messenger Raven</h2>
+            <h2 class="contact-title">Let's Connect</h2>
             <p class="contact-desc">
-              Have an ambitious project, collaboration idea, or want to connect with a disciplined developer? Send a message directly into my inbox.
+              Have an ambitious project, an engineering role, or want to collaborate with a dedicated developer? Send a message directly to my inbox.
             </p>
 
             <a href="mailto:harshitshukla8138@gmail.com" class="contact-email-badge">
@@ -421,7 +430,10 @@
                 <span>⚡ GitHub (@harshit-codes-07)</span>
               </a>
               <a href="mailto:harshitshukla8138@gmail.com" class="social-btn">
-                <span>🦅 Send Direct Mail</span>
+                <span>✉️ Direct Email</span>
+              </a>
+              <a href="https://t.me/itachii0007" target="_blank" rel="noopener noreferrer" class="social-btn">
+                <span>💬 Telegram</span>
               </a>
             </div>
           </div>
@@ -433,8 +445,8 @@
     <!-- Footer -->
     <footer class="site-footer">
       <div class="container">
-        <p>Crafted with Chakra & Logic by <strong>Harshit Shukla</strong></p>
-        <div class="footer-domain">Domain: <strong>itachii0007</strong> • GitHub: <a href="https://github.com/harshit-codes-07" style="color: var(--crimson-light); text-decoration: none;">harshit-codes-07</a></div>
+        <p>Designed & Developed with precision by <strong>Harshit Shukla</strong></p>
+        <div class="footer-domain">Hosted on GitHub Pages · <a href="https://github.com/harshit-codes-07" style="color: var(--accent-light); text-decoration: none;">@harshit-codes-07</a></div>
       </div>
     </footer>
 
@@ -442,7 +454,6 @@
 
   <!-- Scripts -->
   <script src="js/wallpaper.js"></script>
-  <script src="js/audio.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

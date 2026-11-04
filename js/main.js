@@ -1,10 +1,10 @@
 /**
- * Main Application Logic
- * - Typewriter quote animation
- * - GitHub API live statistics
- * - Interactive Jutsu Terminal
- * - Project filtering & smooth navigation
- * - Wallpaper controls
+ * Harshit Shukla - Main Application Logic
+ * Modern, Professional Developer Portfolio
+ * - GitHub API Live Metrics Fetcher
+ * - Interactive Developer Terminal (CLI)
+ * - Project Filter Controls
+ * - Smooth Navigation & Scroll Handling
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const navLinks = document.querySelector('.nav-links');
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
+    if (window.scrollY > 30) {
       nav.classList.add('scrolled');
     } else {
       nav.classList.remove('scrolled');
@@ -35,52 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 2. Wallpaper Controls Bar
-  const crowToggleBtn = document.getElementById('toggle-crows-btn');
-  const emberDensityBtn = document.getElementById('toggle-embers-btn');
-  const shockwaveBtn = document.getElementById('trigger-shockwave-btn');
-
-  if (crowToggleBtn) {
-    crowToggleBtn.addEventListener('click', () => {
-      const currentState = window.WallpaperState?.crowsEnabled ?? true;
-      const newState = !currentState;
-      window.updateWallpaperSettings('crows', newState);
-      crowToggleBtn.classList.toggle('active', newState);
-      crowToggleBtn.textContent = newState ? '🦅 Crows: ON' : '🦅 Crows: OFF';
-    });
-  }
-
-  if (emberDensityBtn) {
-    const densities = ['low', 'normal', 'high'];
-    let currentIdx = 1;
-    emberDensityBtn.addEventListener('click', () => {
-      currentIdx = (currentIdx + 1) % densities.length;
-      const nextDensity = densities[currentIdx];
-      window.updateWallpaperSettings('embers', nextDensity);
-      emberDensityBtn.textContent = `🔥 Embers: ${nextDensity.toUpperCase()}`;
-    });
-  }
-
-  if (shockwaveBtn) {
-    shockwaveBtn.addEventListener('click', () => {
-      window.updateWallpaperSettings('shockwave');
-      if (typeof window.playJutsuChime === 'function') {
-        window.playJutsuChime();
-      }
-    });
-  }
-
-  // Audio Toggle
-  const audioBtn = document.getElementById('audio-toggle-btn');
-  if (audioBtn) {
-    audioBtn.addEventListener('click', () => {
-      if (typeof window.toggleAmbientAudio === 'function') {
-        window.toggleAmbientAudio();
-      }
-    });
-  }
-
-  // 3. GitHub API Live Data Fetcher
+  // 2. GitHub API Live Data Fetcher
   const GH_USERNAME = 'harshit-codes-07';
 
   async function fetchGitHubProfile() {
@@ -89,19 +44,20 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!response.ok) throw new Error('GitHub API response not ok');
       const data = await response.json();
 
-      // Update elements if elements exist
       const avatarEl = document.getElementById('gh-avatar-img');
+      const heroAvatarEl = document.getElementById('hero-avatar-target');
       const nameEl = document.getElementById('gh-name');
       const bioEl = document.getElementById('gh-bio-text');
       const reposEl = document.getElementById('gh-repo-count');
+      const heroReposEl = document.getElementById('hero-repo-count');
       const followersEl = document.getElementById('gh-follower-count');
-      const heroAvatarEl = document.getElementById('hero-avatar-target');
 
       if (avatarEl && data.avatar_url) avatarEl.src = data.avatar_url;
       if (heroAvatarEl && data.avatar_url) heroAvatarEl.src = data.avatar_url;
       if (nameEl && data.name) nameEl.textContent = data.name;
       if (bioEl && data.bio) bioEl.textContent = data.bio;
       if (reposEl && data.public_repos !== undefined) reposEl.textContent = data.public_repos;
+      if (heroReposEl && data.public_repos !== undefined) heroReposEl.textContent = `${data.public_repos}+`;
       if (followersEl && data.followers !== undefined) followersEl.textContent = data.followers;
     } catch (err) {
       console.info('Using fallback GitHub profile statistics:', err.message);
@@ -109,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   fetchGitHubProfile();
 
-  // 4. Project Filters
+  // 3. Project Category Filter
   const filterBtns = document.querySelectorAll('.filter-btn');
   const projectCards = document.querySelectorAll('.project-card');
 
@@ -130,82 +86,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 5. Interactive Jutsu Terminal
+  // 4. Interactive Developer Terminal (CLI)
   const termInput = document.getElementById('term-cmd-input');
   const termBody = document.getElementById('term-output-body');
 
   const COMMANDS = {
     help: () => [
-      { text: '═══ ITACHI SHINOBI PROTOCOL ═══', cls: 'accent' },
+      { text: '═══ HARSHIT SHUKLA - DEVELOPER TERMINAL ═══', cls: 'accent' },
       { text: 'Available commands:', cls: 'system' },
-      { text: '  skills       - View shinobi jutsu & technical arsenal', cls: 'system' },
-      { text: '  projects     - View developer scrolls & repositories', cls: 'system' },
-      { text: '  itachi       - Invoke Itachi Uchiha lore & wisdom', cls: 'system' },
-      { text: '  quote        - Display iconic shinobi philosophies', cls: 'system' },
-      { text: '  mangekyo     - Awaken the Mangekyo Sharingan', cls: 'accent' },
-      { text: '  tsukuyomi    - Cast Tsukuyomi visual illusion', cls: 'accent' },
-      { text: '  contact      - Summon the messenger raven (email & links)', cls: 'system' },
-      { text: '  clear        - Purge terminal buffer', cls: 'system' }
+      { text: '  about        - View developer background & summary', cls: 'system' },
+      { text: '  skills       - List core technical stack & competencies', cls: 'system' },
+      { text: '  projects     - View featured repositories & case studies', cls: 'system' },
+      { text: '  contact      - Display email, GitHub & channels', cls: 'system' },
+      { text: '  github       - Open GitHub profile directly', cls: 'success' },
+      { text: '  clear        - Clear console screen', cls: 'system' }
+    ],
+    about: () => [
+      { text: '>> ABOUT HARSHIT SHUKLA:', cls: 'accent' },
+      { text: 'Software Developer passionate about Python backend logic, task automation, and modern web applications.', cls: 'system' },
+      { text: 'Core mindset: Continuous learning, disciplined problem-solving, and clean, self-documenting code architecture.', cls: 'system' }
     ],
     skills: () => [
-      { text: '>> INVENTORY OF ARSENAL:', cls: 'accent' },
-      { text: '  • Python: Core Logic, Automation scripts, Bot workflows', cls: 'system' },
-      { text: '  • Web Frontend: Semantic HTML5, CSS3 Glassmorphism, Modern JS', cls: 'system' },
-      { text: '  • Version Control: Git branching, GitHub Pages, CI workflows', cls: 'system' },
-      { text: '  • Mindset: Problem solving, Calisthenics discipline, Clean code', cls: 'system' }
+      { text: '>> TECHNICAL COMPETENCIES:', cls: 'accent' },
+      { text: '  • Languages: Python 3, JavaScript (ES6+), HTML5, CSS3', cls: 'system' },
+      { text: '  • Systems & Tools: Git, GitHub Actions, Linux / PowerShell, REST APIs', cls: 'system' },
+      { text: '  • Practices: Clean Architecture, Workflow Automation, Data Structures', cls: 'system' }
     ],
     projects: () => [
-      { text: '>> SCROLLS OF POWER:', cls: 'accent' },
-      { text: '  [1] Tsukuyomi Automation Suite - Python workflow scripts', cls: 'system' },
-      { text: '  [2] Sharingan UI Components - Modern responsive dark-mode UI', cls: 'system' },
-      { text: '  [3] Shinobi Discipline Tracker - Calisthenics & productivity logger', cls: 'system' },
+      { text: '>> FEATURED SOFTWARE REPOSITORIES:', cls: 'accent' },
+      { text: '  [1] Workflow Automation Suite - Python CLI tooling & pipeline automation', cls: 'system' },
+      { text: '  [2] Modern Developer Portfolio - Canvas ambient aurora & responsive UI', cls: 'system' },
+      { text: '  [3] Habit & Performance Protocol - Structured productivity engine', cls: 'system' },
       { text: '  Visit https://github.com/harshit-codes-07 for full source code.', cls: 'success' }
     ],
-    itachi: () => [
-      { text: '“Self-sacrifice... A nameless shinobi who protects peace within its shadow. That is a true shinobi.”', cls: 'accent' },
-      { text: '— Itachi Uchiha, Clan of the Sharingan', cls: 'system' }
-    ],
-    quote: () => {
-      const quotes = [
-        '“It is not wise to judge others based on your own preconceptions and by their appearances.”',
-        '“Those who cannot acknowledge themselves will eventually fail.”',
-        '“Knowledge and awareness are vague, and perhaps better called illusions.”',
-        '“Even the strongest opponent always has a weakness.”'
-      ];
-      const pick = quotes[Math.floor(Math.random() * quotes.length)];
-      return [{ text: pick, cls: 'accent' }, { text: '— Itachi Uchiha', cls: 'system' }];
-    },
-    mangekyo: () => {
-      const icons = document.querySelectorAll('.mangekyo-icon, .hero-avatar-frame');
-      icons.forEach(el => {
-        el.style.transition = 'transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), filter 1s';
-        el.style.transform = 'scale(1.2) rotate(720deg)';
-        el.style.filter = 'drop-shadow(0 0 35px #ff1e42)';
-        setTimeout(() => {
-          el.style.transform = '';
-          el.style.filter = '';
-        }, 2500);
-      });
-      window.updateWallpaperSettings('shockwave');
-      if (typeof window.playJutsuChime === 'function') window.playJutsuChime();
-      return [{ text: '👁️ MANGEKYO SHARINGAN AWAKENED! Reality distorted.', cls: 'accent' }];
-    },
-    tsukuyomi: () => {
-      document.body.style.transition = 'filter 0.5s ease';
-      document.body.style.filter = 'invert(1) hue-rotate(180deg) contrast(1.4)';
-      window.updateWallpaperSettings('shockwave');
-      if (typeof window.playJutsuChime === 'function') window.playJutsuChime();
-      setTimeout(() => {
-        document.body.style.filter = '';
-      }, 1400);
-      return [{ text: '🌑 TSUKUYOMI CAST! You are trapped in 72 hours of illusions.', cls: 'error' }];
-    },
     contact: () => [
-      { text: '>> SUMMON HARSHIT SHUKLA:', cls: 'accent' },
+      { text: '>> GET IN TOUCH:', cls: 'accent' },
       { text: '  Email: harshitshukla8138@gmail.com', cls: 'system' },
       { text: '  GitHub: https://github.com/harshit-codes-07', cls: 'system' },
-      { text: '  Domain: itachii0007', cls: 'system' }
-    ]
+      { text: '  Location: India (Available for Remote Work & Projects)', cls: 'system' }
+    ],
+    github: () => {
+      window.open('https://github.com/harshit-codes-07', '_blank');
+      return [{ text: 'Opening https://github.com/harshit-codes-07 in new tab...', cls: 'success' }];
+    }
   };
 
   if (termInput && termBody) {
@@ -217,8 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!rawCmd) return;
 
-        // Print entered command
-        appendTermLine(`itachi@shinobi:~$ ${rawCmd}`, 'term-user-cmd');
+        appendTermLine(`harshit@dev-box:~$ ${rawCmd}`, 'term-user-cmd');
 
         if (cmd === 'clear') {
           termBody.innerHTML = '';
@@ -229,106 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
           const lines = COMMANDS[cmd]();
           lines.forEach(item => appendTermLine(item.text, item.cls));
         } else {
-          appendTermLine(`Command not found: '${rawCmd}'. Type 'help' for Jutsu commands.`, 'error');
+          appendTermLine(`Command not found: '${rawCmd}'. Type 'help' to view available commands.`, 'error');
         }
 
         termBody.scrollTop = termBody.scrollHeight;
       }
-    });
-  }
-
-  // 6. Global Keyboard Secret Easter Egg
-  let typedKeys = '';
-  const SECRET_CODES = {
-    itachi: '✦ GENJUTSU ACTIVATED: ITACHI UCHIHA ✦',
-    tsukuyomi: '🌑 TSUKUYOMI INVOKED: 72 HOURS OF GENJUTSU 🌑',
-    mangekyo: '👁️ MANGEKYO SHARINGAN: OMNIPOTENT VISION 👁️',
-    amaterasu: '🔥 AMATERASU: INEXTINGUISHABLE BLACK FLAMES 🔥'
-  };
-
-  window.addEventListener('keydown', (e) => {
-    // Ignore typing inside input, textarea, or contenteditable
-    if (['INPUT', 'TEXTAREA'].includes(e.target.tagName) || e.target.isContentEditable) {
-      return;
-    }
-
-    if (e.key.length === 1 && e.key.match(/[a-z]/i)) {
-      typedKeys = (typedKeys + e.key.toLowerCase()).slice(-15);
-
-      for (const [code, label] of Object.entries(SECRET_CODES)) {
-        if (typedKeys.endsWith(code)) {
-          triggerSecretGenjutsu(code, label);
-          typedKeys = '';
-          break;
-        }
-      }
-    }
-  });
-
-  function triggerSecretGenjutsu(code, title) {
-    // 1. Burst of 35 crows from screen center
-    if (typeof window.triggerCrowBurst === 'function') {
-      window.triggerCrowBurst(window.innerWidth / 2, window.innerHeight / 2, 35);
-    }
-
-    // 2. Play audio jutsu chime
-    if (typeof window.playJutsuChime === 'function') {
-      window.playJutsuChime();
-    }
-
-    // 3. Shockwave ripple
-    if (typeof window.updateWallpaperSettings === 'function') {
-      window.updateWallpaperSettings('shockwave');
-    }
-
-    // 4. Dramatic Screen Flash & Inversion
-    document.body.classList.add('genjutsu-active');
-    setTimeout(() => {
-      document.body.classList.remove('genjutsu-active');
-    }, 2200);
-
-    // 5. Cinematic Genjutsu Banner Toast
-    showGenjutsuBanner(title, code);
-
-    // 6. Echo in terminal if present
-    if (termBody) {
-      appendTermLine(`>> [SECRET UNLOCKED]: ${title}`, 'accent');
-      termBody.scrollTop = termBody.scrollHeight;
-    }
-  }
-
-  function showGenjutsuBanner(title, code) {
-    let banner = document.getElementById('genjutsu-banner');
-    if (!banner) {
-      banner = document.createElement('div');
-      banner.id = 'genjutsu-banner';
-      banner.className = 'genjutsu-banner';
-      document.body.appendChild(banner);
-    }
-
-    banner.innerHTML = `
-      <div class="genjutsu-inner">
-        <img src="assets/mangekyo.svg" class="genjutsu-eye-spin" alt="Mangekyo" />
-        <div class="genjutsu-title">${title}</div>
-        <p class="genjutsu-sub">“Those who forgive themselves, and are able to accept their true nature... They are the strong ones!”</p>
-      </div>
-    `;
-
-    banner.classList.add('visible');
-    setTimeout(() => {
-      banner.classList.remove('visible');
-    }, 3500);
-  }
-
-  // Amaterasu Toggle button in Wallpaper Bar
-  const amaterasuBtn = document.getElementById('toggle-amaterasu-btn');
-  if (amaterasuBtn) {
-    amaterasuBtn.addEventListener('click', () => {
-      const current = window.WallpaperState?.amaterasuEnabled ?? true;
-      const next = !current;
-      window.updateWallpaperSettings('amaterasu', next);
-      amaterasuBtn.classList.toggle('active', next);
-      amaterasuBtn.textContent = next ? '🔥 Amaterasu: ON' : '🔥 Amaterasu: OFF';
     });
   }
 
@@ -338,5 +165,4 @@ document.addEventListener('DOMContentLoaded', () => {
     div.textContent = text;
     termBody.appendChild(div);
   }
-
 });
