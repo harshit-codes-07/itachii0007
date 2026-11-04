@@ -1,7 +1,9 @@
 /**
- * Luminous Silk & Flowing Waves Engine (Light Theme)
- * High-performance 60FPS interactive wave simulation on pearl/clean light background.
- * Engineered for Harshit Shukla's modern developer portfolio.
+ * Cinematic Misty Mountain Pagoda & Floating Embers Engine
+ * Matches the exact aesthetic from Stark's portfolio (urstark.is-a.dev)
+ * Features:
+ * - Misty mountain pagoda landscape with atmospheric depth
+ * - 60FPS floating luminous ember fireflies with cursor interaction
  */
 
 (function () {
@@ -14,305 +16,211 @@
   let width = (canvas.width = window.innerWidth);
   let height = (canvas.height = window.innerHeight);
 
-  // Mouse / Fluid Interaction
   const mouse = {
     x: width * 0.5,
     y: height * 0.5,
     targetX: width * 0.5,
     targetY: height * 0.5,
-    vx: 0,
-    vy: 0,
-    speed: 0,
     active: false
   };
 
-  // Resize handler
   window.addEventListener('resize', () => {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
-    initWaves();
-    initParticles();
+    initEmbers();
   });
 
   window.addEventListener('mousemove', (e) => {
-    const dx = e.clientX - mouse.targetX;
-    const dy = e.clientY - mouse.targetY;
-    mouse.vx = dx * 0.2;
-    mouse.vy = dy * 0.2;
-    mouse.speed = Math.sqrt(dx * dx + dy * dy);
     mouse.targetX = e.clientX;
     mouse.targetY = e.clientY;
     mouse.active = true;
   });
 
-  window.addEventListener('touchmove', (e) => {
-    if (e.touches.length > 0) {
-      const tx = e.touches[0].clientX;
-      const ty = e.touches[0].clientY;
-      const dx = tx - mouse.targetX;
-      const dy = ty - mouse.targetY;
-      mouse.vx = dx * 0.25;
-      mouse.vy = dy * 0.25;
-      mouse.speed = Math.sqrt(dx * dx + dy * dy);
-      mouse.targetX = tx;
-      mouse.targetY = ty;
-      mouse.active = true;
-    }
-  }, { passive: true });
-
   window.addEventListener('mouseleave', () => {
     mouse.active = false;
   });
 
-  // Fluid click impulses
-  const fluidImpulses = [];
-  window.addEventListener('click', (e) => {
-    if (e.target.closest('button, a, input, textarea, .terminal-box')) return;
-    fluidImpulses.push({
-      x: e.clientX,
-      y: e.clientY,
-      radius: 0,
-      maxRadius: Math.max(width, height) * 0.4,
-      strength: 30,
-      decay: 0.94
-    });
-  });
-
-  // Flowing Wave Ribbons (Luminous Pastel/Coral/Rose Spectrum)
-  class FlowWave {
-    constructor(baseY, amplitude, frequency, speed, colorStart, colorEnd, alpha) {
-      this.baseY = baseY;
-      this.amplitude = amplitude;
-      this.frequency = frequency;
-      this.speed = speed;
-      this.colorStart = colorStart;
-      this.colorEnd = colorEnd;
-      this.alpha = alpha;
-      this.phase = Math.random() * Math.PI * 2;
+  window.addEventListener('touchmove', (e) => {
+    if (e.touches.length > 0) {
+      mouse.targetX = e.touches[0].clientX;
+      mouse.targetY = e.touches[0].clientY;
+      mouse.active = true;
     }
+  }, { passive: true });
 
-    draw(time) {
-      this.phase += this.speed;
-
-      ctx.save();
-      const grad = ctx.createLinearGradient(0, 0, width, height);
-      grad.addColorStop(0, this.colorStart);
-      grad.addColorStop(0.5, this.colorEnd);
-      grad.addColorStop(1, 'rgba(248, 250, 252, 0.05)');
-
-      ctx.fillStyle = grad;
-      ctx.globalAlpha = this.alpha;
-      ctx.beginPath();
-      ctx.moveTo(0, height);
-
-      const step = 16;
-      for (let x = 0; x <= width + step; x += step) {
-        const wave1 = Math.sin(x * this.frequency + this.phase) * this.amplitude;
-        const wave2 = Math.cos(x * (this.frequency * 0.5) - this.phase * 0.8) * (this.amplitude * 0.6);
-        const wave3 = Math.sin(x * (this.frequency * 1.8) + this.phase * 1.2) * (this.amplitude * 0.25);
-        
-        let y = this.baseY + wave1 + wave2 + wave3;
-
-        // Interactive mouse displacement (Water wave physics)
-        const dx = x - mouse.x;
-        const dy = y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const maxDist = 240;
-        if (dist < maxDist) {
-          const factor = Math.cos((dist / maxDist) * (Math.PI / 2));
-          y += Math.sin(dist * 0.05 - time * 0.1) * (26 * factor);
-          y += mouse.vy * factor * 0.7;
-        }
-
-        // Fluid click impulses
-        for (let i = 0; i < fluidImpulses.length; i++) {
-          const imp = fluidImpulses[i];
-          const impDist = Math.abs(x - imp.x);
-          const ringDist = Math.abs(impDist - imp.radius);
-          if (ringDist < 60) {
-            const ripple = Math.sin((ringDist / 60) * Math.PI) * imp.strength;
-            y += ripple;
-          }
-        }
-
-        ctx.lineTo(x, y);
-      }
-
-      ctx.lineTo(width, height);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    }
-  }
-
-  let waves = [];
-  function initWaves() {
-    waves = [
-      // Soft Lavender / Sky Mist
-      new FlowWave(height * 0.62, 85, 0.0012, 0.005, 'rgba(199, 210, 254, 0.40)', 'rgba(224, 231, 255, 0.25)', 0.55),
-      // Gentle Rose / Coral Flow
-      new FlowWave(height * 0.70, 75, 0.0015, 0.008, 'rgba(254, 205, 211, 0.45)', 'rgba(253, 164, 175, 0.30)', 0.6),
-      // Sunset Peach Shimmer
-      new FlowWave(height * 0.78, 65, 0.0019, 0.007, 'rgba(254, 215, 170, 0.40)', 'rgba(251, 146, 60, 0.22)', 0.55),
-      // Vibrant Crisp Rose Ribbon
-      new FlowWave(height * 0.85, 50, 0.0024, 0.012, 'rgba(244, 63, 94, 0.20)', 'rgba(251, 113, 133, 0.14)', 0.65),
-      // Surface Pearl Glow
-      new FlowWave(height * 0.91, 35, 0.0028, 0.015, 'rgba(255, 255, 255, 0.60)', 'rgba(244, 63, 94, 0.10)', 0.7)
-    ];
-  }
-  initWaves();
-
-  // Subtle Flowing Light Particles
-  class FlowStreamParticle {
+  // Floating Glowing Firefly Embers
+  class Ember {
     constructor() {
       this.reset(true);
     }
 
     reset(initial = false) {
-      this.x = initial ? Math.random() * width : -20;
-      this.y = Math.random() * height;
-      this.speed = Math.random() * 1.5 + 0.7;
-      this.length = Math.random() * 22 + 8;
-      this.thickness = Math.random() * 1.8 + 0.6;
-      this.alpha = Math.random() * 0.45 + 0.15;
-      this.angle = 0;
-      this.hue = Math.random() > 0.4 ? 345 : 355;
-      this.history = [];
+      this.x = Math.random() * width;
+      this.y = initial ? Math.random() * height : height + 15 + Math.random() * 20;
+      this.size = Math.random() * 2.2 + 1.2;
+      this.depth = Math.random() * 0.7 + 0.3; // Parallax scale
+      this.speedY = (Math.random() * 0.45 + 0.25) * this.depth;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.alpha = Math.random() * 0.55 + 0.3;
+      this.pulse = Math.random() * Math.PI * 2;
+      this.pulseSpeed = Math.random() * 0.03 + 0.015;
+      // Soft rose-amber warm firefly hue
+      this.hue = Math.random() > 0.4 ? 355 : 15;
     }
 
-    update(time) {
-      this.angle = Math.sin(this.y * 0.003 + time * 0.01) * 0.5 + Math.cos(this.x * 0.002) * 0.3;
-      const vx = Math.cos(this.angle) * this.speed + 0.6;
-      const vy = Math.sin(this.angle) * (this.speed * 0.4);
+    update() {
+      this.pulse += this.pulseSpeed;
+      this.y -= this.speedY;
+      this.x += this.speedX + Math.sin(this.pulse) * 0.35;
 
-      this.history.push({ x: this.x, y: this.y });
-      if (this.history.length > 7) this.history.shift();
-
-      this.x += vx;
-      this.y += vy;
-
+      // Cursor gentle repulsion
       if (mouse.active) {
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const d = Math.sqrt(dx * dx + dy * dy);
-        if (d < 150 && d > 10) {
-          const force = (1 - d / 150) * 1.4;
-          this.x += (dx / d) * force;
-          this.y += (dy / d) * force;
+        const dx = this.x - mouse.x;
+        const dy = this.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = 140;
+        if (dist < maxDist && dist > 1) {
+          const force = (1 - dist / maxDist) * 1.8;
+          this.x += (dx / dist) * force;
+          this.y += (dy / dist) * force * 0.6;
         }
       }
 
-      if (this.x > width + 30 || this.y < -30 || this.y > height + 30) {
+      if (this.y < -20 || this.x < -20 || this.x > width + 20) {
         this.reset();
       }
     }
 
     draw() {
-      if (this.history.length < 2) return;
+      const currentAlpha = Math.max(0.1, this.alpha + Math.sin(this.pulse) * 0.2);
       ctx.save();
+      ctx.globalAlpha = currentAlpha;
+      ctx.fillStyle = `hsl(${this.hue}, 85%, 72%)`;
+      ctx.shadowBlur = this.size * 5;
+      ctx.shadowColor = `hsl(${this.hue}, 90%, 65%)`;
+
       ctx.beginPath();
-      ctx.moveTo(this.history[0].x, this.history[0].y);
-      for (let i = 1; i < this.history.length; i++) {
-        ctx.lineTo(this.history[i].x, this.history[i].y);
-      }
-      ctx.strokeStyle = `hsla(${this.hue}, 80%, 55%, ${this.alpha})`;
-      ctx.lineWidth = this.thickness;
-      ctx.lineCap = 'round';
-      ctx.stroke();
+      ctx.arc(this.x, this.y, this.size * this.depth, 0, Math.PI * 2);
+      ctx.fill();
       ctx.restore();
     }
   }
 
-  let particles = [];
-  function initParticles() {
-    particles = [];
-    const count = width < 768 ? 25 : 50;
+  let embers = [];
+  function initEmbers() {
+    embers = [];
+    const count = width < 768 ? 40 : 85;
     for (let i = 0; i < count; i++) {
-      particles.push(new FlowStreamParticle());
+      embers.push(new Ember());
     }
   }
-  initParticles();
+  initEmbers();
 
-  function updateMouse() {
-    mouse.x += (mouse.targetX - mouse.x) * 0.1;
-    mouse.y += (mouse.targetY - mouse.y) * 0.1;
+  // Draw Mountain & Pagoda Silhouettes
+  function drawBackgroundScenery() {
+    // 1. Deep atmospheric gradient
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, height);
+    skyGrad.addColorStop(0, '#101217');
+    skyGrad.addColorStop(0.4, '#151820');
+    skyGrad.addColorStop(0.7, '#181b24');
+    skyGrad.addColorStop(1, '#0e1015');
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, width, height);
 
-    for (let i = fluidImpulses.length - 1; i >= 0; i--) {
-      const imp = fluidImpulses[i];
-      imp.radius += 5;
-      imp.strength *= imp.decay;
-      if (imp.radius >= imp.maxRadius || imp.strength < 0.2) {
-        fluidImpulses.splice(i, 1);
-      }
-    }
-  }
-
-  // Luminous Ambient Lighting Orbs
-  function drawGlowOrbs(time) {
-    // Upper Right Warm Rose Glow
-    const orbX = width * 0.85 + Math.sin(time * 0.007) * 50;
-    const orbY = height * 0.22 + Math.cos(time * 0.005) * 35;
-    const orbGrad = ctx.createRadialGradient(orbX, orbY, 0, orbX, orbY, Math.min(width, height) * 0.45);
-    orbGrad.addColorStop(0, 'rgba(254, 205, 211, 0.45)');
-    orbGrad.addColorStop(0.5, 'rgba(254, 226, 226, 0.20)');
-    orbGrad.addColorStop(1, 'rgba(248, 250, 252, 0)');
-
-    ctx.fillStyle = orbGrad;
+    // 2. Distant misty mountain ridges
+    ctx.save();
+    ctx.fillStyle = 'rgba(28, 32, 42, 0.45)';
     ctx.beginPath();
-    ctx.arc(orbX, orbY, Math.min(width, height) * 0.45, 0, Math.PI * 2);
+    ctx.moveTo(0, height * 0.65);
+    ctx.bezierCurveTo(width * 0.2, height * 0.45, width * 0.35, height * 0.55, width * 0.55, height * 0.42);
+    ctx.bezierCurveTo(width * 0.75, height * 0.32, width * 0.9, height * 0.48, width, height * 0.52);
+    ctx.lineTo(width, height);
+    ctx.lineTo(0, height);
+    ctx.closePath();
     ctx.fill();
+    ctx.restore();
 
-    // Top Left Subtle Sky Iris
-    const orb2X = width * 0.15 + Math.cos(time * 0.006) * 40;
-    const orb2Y = height * 0.18 + Math.sin(time * 0.008) * 30;
-    const orb2Grad = ctx.createRadialGradient(orb2X, orb2Y, 0, orb2X, orb2Y, Math.min(width, height) * 0.4);
-    orb2Grad.addColorStop(0, 'rgba(224, 231, 255, 0.45)');
-    orb2Grad.addColorStop(0.6, 'rgba(238, 242, 255, 0.15)');
-    orb2Grad.addColorStop(1, 'rgba(248, 250, 252, 0)');
-
-    ctx.fillStyle = orb2Grad;
+    // 3. Middle mountain ridge with soft mist
+    ctx.save();
+    ctx.fillStyle = 'rgba(20, 23, 30, 0.65)';
     ctx.beginPath();
-    ctx.arc(orb2X, orb2Y, Math.min(width, height) * 0.4, 0, Math.PI * 2);
+    ctx.moveTo(0, height * 0.75);
+    ctx.bezierCurveTo(width * 0.15, height * 0.58, width * 0.4, height * 0.68, width * 0.65, height * 0.55);
+    ctx.bezierCurveTo(width * 0.85, height * 0.45, width * 0.95, height * 0.62, width, height * 0.68);
+    ctx.lineTo(width, height);
+    ctx.lineTo(0, height);
+    ctx.closePath();
     ctx.fill();
+    ctx.restore();
 
-    // Cursor Luminous Follow
-    if (mouse.active) {
-      const curGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 180);
-      curGrad.addColorStop(0, 'rgba(244, 63, 94, 0.08)');
-      curGrad.addColorStop(0.7, 'rgba(254, 205, 211, 0.02)');
-      curGrad.addColorStop(1, 'rgba(248, 250, 252, 0)');
+    // 4. Traditional Pagoda Roof Silhouettes (Right & Center Background)
+    drawPagodaRoofs();
 
-      ctx.fillStyle = curGrad;
-      ctx.beginPath();
-      ctx.arc(mouse.x, mouse.y, 180, 0, Math.PI * 2);
-      ctx.fill();
-    }
+    // 5. Soft atmospheric mist over roofs
+    const mistGrad = ctx.createLinearGradient(0, height * 0.3, 0, height);
+    mistGrad.addColorStop(0, 'rgba(24, 27, 36, 0)');
+    mistGrad.addColorStop(0.5, 'rgba(22, 25, 34, 0.35)');
+    mistGrad.addColorStop(1, 'rgba(12, 14, 18, 0.75)');
+    ctx.fillStyle = mistGrad;
+    ctx.fillRect(0, 0, width, height);
   }
 
-  // 60 FPS Render Loop
-  let time = 0;
+  function drawPagodaRoofs() {
+    ctx.save();
+    ctx.fillStyle = '#0c0e13';
+    ctx.strokeStyle = '#181b24';
+    ctx.lineWidth = 1;
+
+    // Right large Pagoda
+    const px = width * 0.68;
+    const py = height * 0.62;
+
+    // Tier 1 (Top)
+    drawCurvedRoof(px + 40, py - 60, 140, 28);
+    // Tier 2 (Middle)
+    drawCurvedRoof(px + 10, py, 200, 36);
+    // Tier 3 (Base)
+    drawCurvedRoof(px - 30, py + 70, 280, 48);
+
+    // Left Subtle Pagoda
+    const lx = width * 0.12;
+    const ly = height * 0.72;
+    drawCurvedRoof(lx, ly - 40, 110, 22);
+    drawCurvedRoof(lx - 20, ly + 10, 150, 28);
+
+    ctx.restore();
+  }
+
+  function drawCurvedRoof(x, y, roofWidth, roofHeight) {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    // Left upward swoop
+    ctx.quadraticCurveTo(x + roofWidth * 0.2, y + roofHeight * 0.6, x + roofWidth * 0.5, y + roofHeight * 0.8);
+    // Right upward swoop
+    ctx.quadraticCurveTo(x + roofWidth * 0.8, y + roofHeight * 0.6, x + roofWidth, y);
+    ctx.lineTo(x + roofWidth * 0.9, y + roofHeight);
+    ctx.lineTo(x + roofWidth * 0.1, y + roofHeight);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  // Main 60 FPS Render Loop
   function render() {
     ctx.clearRect(0, 0, width, height);
 
-    // Clean, Luminous Pearl White Base
-    ctx.fillStyle = '#f8fafc';
-    ctx.fillRect(0, 0, width, height);
+    mouse.x += (mouse.targetX - mouse.x) * 0.08;
+    mouse.y += (mouse.targetY - mouse.y) * 0.08;
 
-    updateMouse();
-    drawGlowOrbs(time);
+    // 1. Draw Misty Scenery & Silhouettes
+    drawBackgroundScenery();
 
-    // 1. Draw Flowing Luminous Waves
-    for (let i = 0; i < waves.length; i++) {
-      waves[i].draw(time);
+    // 2. Draw Floating Firefly Embers
+    for (let i = 0; i < embers.length; i++) {
+      embers[i].update();
+      embers[i].draw();
     }
 
-    // 2. Draw Flowing Particle Streams
-    for (let i = 0; i < particles.length; i++) {
-      particles[i].update(time);
-      particles[i].draw();
-    }
-
-    time++;
     requestAnimationFrame(render);
   }
 

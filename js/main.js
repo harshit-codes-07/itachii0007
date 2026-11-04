@@ -1,41 +1,65 @@
 /**
- * Harshit Shukla - Main Application Logic
- * Modern, Professional Developer Portfolio
- * - GitHub API Live Metrics Fetcher
- * - Interactive Developer Terminal (CLI)
- * - Project Filter Controls
- * - Smooth Navigation & Scroll Handling
+ * Harshit Shukla Portfolio Engine
+ * Inspired by Stark's aesthetic (urstark.is-a.dev)
+ * Features:
+ * - Dynamic live clock (12-hour format)
+ * - Navigation island tab switcher (Home, About, Skills, Projects, Contact)
+ * - Lofi music player toggle with equalizer animation
+ * - GitHub API metrics integration
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   'use strict';
 
-  // 1. Navbar Scroll Effect & Mobile Menu
-  const nav = document.querySelector('.site-nav');
-  const mobileToggle = document.querySelector('.mobile-toggle');
-  const navLinks = document.querySelector('.nav-links');
+  // 1. Dynamic Live Clock in Center Island
+  const clockElement = document.getElementById('live-time-clock');
+  function updateClock() {
+    if (!clockElement) return;
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    clockElement.textContent = `${hours}:${minutes} ${ampm}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 30) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
-    }
+  // 2. Navigation Island Tab Switcher
+  const navTabs = document.querySelectorAll('.nav-tab-btn');
+  const viewPanels = document.querySelectorAll('.view-panel');
+
+  navTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetView = tab.getAttribute('data-view');
+
+      // Update active nav button
+      navTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Switch view panel
+      viewPanels.forEach(panel => {
+        if (panel.id === `view-${targetView}`) {
+          panel.classList.add('active');
+          panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          panel.classList.remove('active');
+        }
+      });
+    });
   });
 
-  if (mobileToggle && navLinks) {
-    mobileToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-    });
-
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-      });
+  // 3. Lofi Music Player Toggle
+  const musicPlayerPill = document.querySelector('.music-player-pill');
+  if (musicPlayerPill) {
+    musicPlayerPill.addEventListener('click', () => {
+      if (typeof window.toggleLofiPlayer === 'function') {
+        window.toggleLofiPlayer();
+      }
     });
   }
 
-  // 2. GitHub API Live Data Fetcher
+  // 4. GitHub API Live Data Fetcher
   const GH_USERNAME = 'harshit-codes-07';
 
   async function fetchGitHubProfile() {
@@ -44,28 +68,20 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!response.ok) throw new Error('GitHub API response not ok');
       const data = await response.json();
 
-      const avatarEl = document.getElementById('gh-avatar-img');
-      const heroAvatarEl = document.getElementById('hero-avatar-target');
-      const nameEl = document.getElementById('gh-name');
-      const bioEl = document.getElementById('gh-bio-text');
-      const reposEl = document.getElementById('gh-repo-count');
-      const heroReposEl = document.getElementById('hero-repo-count');
-      const followersEl = document.getElementById('gh-follower-count');
+      const avatarTarget = document.getElementById('hero-orb-avatar');
+      const ghRepos = document.getElementById('gh-repo-count');
+      const ghFollowers = document.getElementById('gh-follower-count');
 
-      if (avatarEl && data.avatar_url) avatarEl.src = data.avatar_url;
-      if (heroAvatarEl && data.avatar_url) heroAvatarEl.src = data.avatar_url;
-      if (nameEl && data.name) nameEl.textContent = data.name;
-      if (bioEl && data.bio) bioEl.textContent = data.bio;
-      if (reposEl && data.public_repos !== undefined) reposEl.textContent = data.public_repos;
-      if (heroReposEl && data.public_repos !== undefined) heroReposEl.textContent = `${data.public_repos}+`;
-      if (followersEl && data.followers !== undefined) followersEl.textContent = data.followers;
+      if (avatarTarget && data.avatar_url) avatarTarget.src = data.avatar_url;
+      if (ghRepos && data.public_repos !== undefined) ghRepos.textContent = data.public_repos;
+      if (ghFollowers && data.followers !== undefined) ghFollowers.textContent = data.followers;
     } catch (err) {
-      console.info('Using fallback GitHub profile statistics:', err.message);
+      console.info('Using fallback profile stats:', err.message);
     }
   }
   fetchGitHubProfile();
 
-  // 3. Project Category Filter
+  // 5. Project Filters in Projects View
   const filterBtns = document.querySelectorAll('.filter-btn');
   const projectCards = document.querySelectorAll('.project-card');
 
@@ -86,83 +102,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 4. Interactive Developer Terminal (CLI)
-  const termInput = document.getElementById('term-cmd-input');
-  const termBody = document.getElementById('term-output-body');
-
-  const COMMANDS = {
-    help: () => [
-      { text: '═══ HARSHIT SHUKLA - DEVELOPER TERMINAL ═══', cls: 'accent' },
-      { text: 'Available commands:', cls: 'system' },
-      { text: '  about        - View developer background & summary', cls: 'system' },
-      { text: '  skills       - List core technical stack & competencies', cls: 'system' },
-      { text: '  projects     - View featured repositories & case studies', cls: 'system' },
-      { text: '  contact      - Display email, GitHub & channels', cls: 'system' },
-      { text: '  github       - Open GitHub profile directly', cls: 'success' },
-      { text: '  clear        - Clear console screen', cls: 'system' }
-    ],
-    about: () => [
-      { text: '>> ABOUT HARSHIT SHUKLA:', cls: 'accent' },
-      { text: 'Software Developer passionate about Python backend logic, task automation, and modern web applications.', cls: 'system' },
-      { text: 'Core mindset: Continuous learning, disciplined problem-solving, and clean, self-documenting code architecture.', cls: 'system' }
-    ],
-    skills: () => [
-      { text: '>> TECHNICAL COMPETENCIES:', cls: 'accent' },
-      { text: '  • Languages: Python 3, JavaScript (ES6+), HTML5, CSS3', cls: 'system' },
-      { text: '  • Systems & Tools: Git, GitHub Actions, Linux / PowerShell, REST APIs', cls: 'system' },
-      { text: '  • Practices: Clean Architecture, Workflow Automation, Data Structures', cls: 'system' }
-    ],
-    projects: () => [
-      { text: '>> FEATURED SOFTWARE REPOSITORIES:', cls: 'accent' },
-      { text: '  [1] Workflow Automation Suite - Python CLI tooling & pipeline automation', cls: 'system' },
-      { text: '  [2] Modern Developer Portfolio - Canvas ambient aurora & responsive UI', cls: 'system' },
-      { text: '  [3] Habit & Performance Protocol - Structured productivity engine', cls: 'system' },
-      { text: '  Visit https://github.com/harshit-codes-07 for full source code.', cls: 'success' }
-    ],
-    contact: () => [
-      { text: '>> GET IN TOUCH:', cls: 'accent' },
-      { text: '  Email: harshitshukla8138@gmail.com', cls: 'system' },
-      { text: '  GitHub: https://github.com/harshit-codes-07', cls: 'system' },
-      { text: '  Location: India (Available for Remote Work & Projects)', cls: 'system' }
-    ],
-    github: () => {
-      window.open('https://github.com/harshit-codes-07', '_blank');
-      return [{ text: 'Opening https://github.com/harshit-codes-07 in new tab...', cls: 'success' }];
-    }
-  };
-
-  if (termInput && termBody) {
-    termInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        const rawCmd = termInput.value.trim();
-        const cmd = rawCmd.toLowerCase();
-        termInput.value = '';
-
-        if (!rawCmd) return;
-
-        appendTermLine(`harshit@dev-box:~$ ${rawCmd}`, 'term-user-cmd');
-
-        if (cmd === 'clear') {
-          termBody.innerHTML = '';
-          return;
-        }
-
-        if (COMMANDS[cmd]) {
-          const lines = COMMANDS[cmd]();
-          lines.forEach(item => appendTermLine(item.text, item.cls));
-        } else {
-          appendTermLine(`Command not found: '${rawCmd}'. Type 'help' to view available commands.`, 'error');
-        }
-
-        termBody.scrollTop = termBody.scrollHeight;
-      }
-    });
-  }
-
-  function appendTermLine(text, className) {
-    const div = document.createElement('div');
-    div.className = `term-line ${className || ''}`;
-    div.textContent = text;
-    termBody.appendChild(div);
-  }
 });
