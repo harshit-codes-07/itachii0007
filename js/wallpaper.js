@@ -1,6 +1,6 @@
 /**
- * Flowing Silk & Fluid Harmonic Waves Engine
- * High-performance 60FPS interactive wave simulation with particle streams.
+ * Luminous Silk & Flowing Waves Engine (Light Theme)
+ * High-performance 60FPS interactive wave simulation on pearl/clean light background.
  * Engineered for Harshit Shukla's modern developer portfolio.
  */
 
@@ -64,7 +64,7 @@
     mouse.active = false;
   });
 
-  // Shockwave / Fluid Impulse on click
+  // Fluid click impulses
   const fluidImpulses = [];
   window.addEventListener('click', (e) => {
     if (e.target.closest('button, a, input, textarea, .terminal-box')) return;
@@ -73,12 +73,12 @@
       y: e.clientY,
       radius: 0,
       maxRadius: Math.max(width, height) * 0.4,
-      strength: 35,
+      strength: 30,
       decay: 0.94
     });
   });
 
-  // Wave Ribbons Configuration
+  // Flowing Wave Ribbons (Luminous Pastel/Coral/Rose Spectrum)
   class FlowWave {
     constructor(baseY, amplitude, frequency, speed, colorStart, colorEnd, alpha) {
       this.baseY = baseY;
@@ -98,7 +98,7 @@
       const grad = ctx.createLinearGradient(0, 0, width, height);
       grad.addColorStop(0, this.colorStart);
       grad.addColorStop(0.5, this.colorEnd);
-      grad.addColorStop(1, 'rgba(8, 9, 13, 0.05)');
+      grad.addColorStop(1, 'rgba(248, 250, 252, 0.05)');
 
       ctx.fillStyle = grad;
       ctx.globalAlpha = this.alpha;
@@ -107,22 +107,21 @@
 
       const step = 16;
       for (let x = 0; x <= width + step; x += step) {
-        // Multi-harmonic sine waves
         const wave1 = Math.sin(x * this.frequency + this.phase) * this.amplitude;
         const wave2 = Math.cos(x * (this.frequency * 0.5) - this.phase * 0.8) * (this.amplitude * 0.6);
         const wave3 = Math.sin(x * (this.frequency * 1.8) + this.phase * 1.2) * (this.amplitude * 0.25);
         
         let y = this.baseY + wave1 + wave2 + wave3;
 
-        // Interactive mouse displacement (Flowing water effect)
+        // Interactive mouse displacement (Water wave physics)
         const dx = x - mouse.x;
         const dy = y - mouse.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const maxDist = 220;
+        const maxDist = 240;
         if (dist < maxDist) {
           const factor = Math.cos((dist / maxDist) * (Math.PI / 2));
-          y += Math.sin(dist * 0.05 - time * 0.1) * (30 * factor);
-          y += mouse.vy * factor * 0.8;
+          y += Math.sin(dist * 0.05 - time * 0.1) * (26 * factor);
+          y += mouse.vy * factor * 0.7;
         }
 
         // Fluid click impulses
@@ -136,11 +135,7 @@
           }
         }
 
-        if (x === 0) {
-          ctx.lineTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
+        ctx.lineTo(x, y);
       }
 
       ctx.lineTo(width, height);
@@ -153,21 +148,21 @@
   let waves = [];
   function initWaves() {
     waves = [
-      // Deep Background Velvet Crimson
-      new FlowWave(height * 0.65, 80, 0.0012, 0.006, 'rgba(159, 18, 57, 0.25)', 'rgba(76, 5, 25, 0.15)', 0.5),
-      // Mid Flowing Ruby Wave
-      new FlowWave(height * 0.72, 70, 0.0016, 0.009, 'rgba(225, 29, 72, 0.28)', 'rgba(190, 18, 60, 0.20)', 0.6),
-      // Violet Depth Wave (creates contrast and luxurious flow)
-      new FlowWave(height * 0.78, 60, 0.0018, 0.007, 'rgba(67, 56, 202, 0.18)', 'rgba(225, 29, 72, 0.16)', 0.55),
-      // Foreground Vibrant Crimson Crest
-      new FlowWave(height * 0.84, 50, 0.0022, 0.012, 'rgba(244, 63, 94, 0.35)', 'rgba(225, 29, 72, 0.25)', 0.7),
-      // Soft Surface Shimmer
-      new FlowWave(height * 0.90, 35, 0.0028, 0.016, 'rgba(251, 113, 133, 0.22)', 'rgba(244, 63, 94, 0.12)', 0.65)
+      // Soft Lavender / Sky Mist
+      new FlowWave(height * 0.62, 85, 0.0012, 0.005, 'rgba(199, 210, 254, 0.40)', 'rgba(224, 231, 255, 0.25)', 0.55),
+      // Gentle Rose / Coral Flow
+      new FlowWave(height * 0.70, 75, 0.0015, 0.008, 'rgba(254, 205, 211, 0.45)', 'rgba(253, 164, 175, 0.30)', 0.6),
+      // Sunset Peach Shimmer
+      new FlowWave(height * 0.78, 65, 0.0019, 0.007, 'rgba(254, 215, 170, 0.40)', 'rgba(251, 146, 60, 0.22)', 0.55),
+      // Vibrant Crisp Rose Ribbon
+      new FlowWave(height * 0.85, 50, 0.0024, 0.012, 'rgba(244, 63, 94, 0.20)', 'rgba(251, 113, 133, 0.14)', 0.65),
+      // Surface Pearl Glow
+      new FlowWave(height * 0.91, 35, 0.0028, 0.015, 'rgba(255, 255, 255, 0.60)', 'rgba(244, 63, 94, 0.10)', 0.7)
     ];
   }
   initWaves();
 
-  // Flowing Particle Stream (Light Tendrils)
+  // Subtle Flowing Light Particles
   class FlowStreamParticle {
     constructor() {
       this.reset(true);
@@ -176,35 +171,32 @@
     reset(initial = false) {
       this.x = initial ? Math.random() * width : -20;
       this.y = Math.random() * height;
-      this.speed = Math.random() * 1.6 + 0.8;
-      this.length = Math.random() * 25 + 10;
+      this.speed = Math.random() * 1.5 + 0.7;
+      this.length = Math.random() * 22 + 8;
       this.thickness = Math.random() * 1.8 + 0.6;
-      this.alpha = Math.random() * 0.5 + 0.2;
+      this.alpha = Math.random() * 0.45 + 0.15;
       this.angle = 0;
-      this.hue = Math.random() > 0.4 ? 345 : 355; // Rose crimson spectrum
+      this.hue = Math.random() > 0.4 ? 345 : 355;
       this.history = [];
     }
 
     update(time) {
-      // Flow vector field driven by sine oscillations
-      this.angle = Math.sin(this.y * 0.003 + time * 0.01) * 0.6 + Math.cos(this.x * 0.002) * 0.3;
-      
-      const vx = Math.cos(this.angle) * this.speed + 0.6; // gentle rightward drift
-      const vy = Math.sin(this.angle) * (this.speed * 0.5);
+      this.angle = Math.sin(this.y * 0.003 + time * 0.01) * 0.5 + Math.cos(this.x * 0.002) * 0.3;
+      const vx = Math.cos(this.angle) * this.speed + 0.6;
+      const vy = Math.sin(this.angle) * (this.speed * 0.4);
 
       this.history.push({ x: this.x, y: this.y });
-      if (this.history.length > 8) this.history.shift();
+      if (this.history.length > 7) this.history.shift();
 
       this.x += vx;
       this.y += vy;
 
-      // Mouse attraction / gentle flow around cursor
       if (mouse.active) {
         const dx = mouse.x - this.x;
         const dy = mouse.y - this.y;
         const d = Math.sqrt(dx * dx + dy * dy);
-        if (d < 160 && d > 10) {
-          const force = (1 - d / 160) * 1.5;
+        if (d < 150 && d > 10) {
+          const force = (1 - d / 150) * 1.4;
           this.x += (dx / d) * force;
           this.y += (dy / d) * force;
         }
@@ -223,11 +215,9 @@
       for (let i = 1; i < this.history.length; i++) {
         ctx.lineTo(this.history[i].x, this.history[i].y);
       }
-      ctx.strokeStyle = `hsla(${this.hue}, 90%, 65%, ${this.alpha})`;
+      ctx.strokeStyle = `hsla(${this.hue}, 80%, 55%, ${this.alpha})`;
       ctx.lineWidth = this.thickness;
       ctx.lineCap = 'round';
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = `hsl(${this.hue}, 90%, 60%)`;
       ctx.stroke();
       ctx.restore();
     }
@@ -236,19 +226,17 @@
   let particles = [];
   function initParticles() {
     particles = [];
-    const count = width < 768 ? 30 : 60;
+    const count = width < 768 ? 25 : 50;
     for (let i = 0; i < count; i++) {
       particles.push(new FlowStreamParticle());
     }
   }
   initParticles();
 
-  // Smooth mouse interpolation
   function updateMouse() {
     mouse.x += (mouse.targetX - mouse.x) * 0.1;
     mouse.y += (mouse.targetY - mouse.y) * 0.1;
 
-    // Fade impulses
     for (let i = fluidImpulses.length - 1; i >= 0; i--) {
       const imp = fluidImpulses[i];
       imp.radius += 5;
@@ -259,48 +247,61 @@
     }
   }
 
-  // Atmospheric Ambient Glow on Top & Bottom
+  // Luminous Ambient Lighting Orbs
   function drawGlowOrbs(time) {
-    // Upper right flowing ambient orb
-    const orbX = width * 0.8 + Math.sin(time * 0.008) * 60;
-    const orbY = height * 0.25 + Math.cos(time * 0.006) * 40;
+    // Upper Right Warm Rose Glow
+    const orbX = width * 0.85 + Math.sin(time * 0.007) * 50;
+    const orbY = height * 0.22 + Math.cos(time * 0.005) * 35;
     const orbGrad = ctx.createRadialGradient(orbX, orbY, 0, orbX, orbY, Math.min(width, height) * 0.45);
-    orbGrad.addColorStop(0, 'rgba(244, 63, 94, 0.15)');
-    orbGrad.addColorStop(0.5, 'rgba(225, 29, 72, 0.06)');
-    orbGrad.addColorStop(1, 'rgba(8, 9, 13, 0)');
+    orbGrad.addColorStop(0, 'rgba(254, 205, 211, 0.45)');
+    orbGrad.addColorStop(0.5, 'rgba(254, 226, 226, 0.20)');
+    orbGrad.addColorStop(1, 'rgba(248, 250, 252, 0)');
 
     ctx.fillStyle = orbGrad;
     ctx.beginPath();
     ctx.arc(orbX, orbY, Math.min(width, height) * 0.45, 0, Math.PI * 2);
     ctx.fill();
 
-    // Cursor fluid glow
+    // Top Left Subtle Sky Iris
+    const orb2X = width * 0.15 + Math.cos(time * 0.006) * 40;
+    const orb2Y = height * 0.18 + Math.sin(time * 0.008) * 30;
+    const orb2Grad = ctx.createRadialGradient(orb2X, orb2Y, 0, orb2X, orb2Y, Math.min(width, height) * 0.4);
+    orb2Grad.addColorStop(0, 'rgba(224, 231, 255, 0.45)');
+    orb2Grad.addColorStop(0.6, 'rgba(238, 242, 255, 0.15)');
+    orb2Grad.addColorStop(1, 'rgba(248, 250, 252, 0)');
+
+    ctx.fillStyle = orb2Grad;
+    ctx.beginPath();
+    ctx.arc(orb2X, orb2Y, Math.min(width, height) * 0.4, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Cursor Luminous Follow
     if (mouse.active) {
-      const curGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 200);
-      curGrad.addColorStop(0, 'rgba(244, 63, 94, 0.12)');
-      curGrad.addColorStop(0.6, 'rgba(159, 18, 57, 0.04)');
-      curGrad.addColorStop(1, 'rgba(8, 9, 13, 0)');
+      const curGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 180);
+      curGrad.addColorStop(0, 'rgba(244, 63, 94, 0.08)');
+      curGrad.addColorStop(0.7, 'rgba(254, 205, 211, 0.02)');
+      curGrad.addColorStop(1, 'rgba(248, 250, 252, 0)');
 
       ctx.fillStyle = curGrad;
       ctx.beginPath();
-      ctx.arc(mouse.x, mouse.y, 200, 0, Math.PI * 2);
+      ctx.arc(mouse.x, mouse.y, 180, 0, Math.PI * 2);
       ctx.fill();
     }
   }
 
-  // Main 60 FPS Render Loop
+  // 60 FPS Render Loop
   let time = 0;
   function render() {
     ctx.clearRect(0, 0, width, height);
 
-    // Deep Dark Base
-    ctx.fillStyle = '#08090d';
+    // Clean, Luminous Pearl White Base
+    ctx.fillStyle = '#f8fafc';
     ctx.fillRect(0, 0, width, height);
 
     updateMouse();
     drawGlowOrbs(time);
 
-    // 1. Draw Flowing Silk Waves
+    // 1. Draw Flowing Luminous Waves
     for (let i = 0; i < waves.length; i++) {
       waves[i].draw(time);
     }
